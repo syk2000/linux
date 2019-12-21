@@ -1,0 +1,13 @@
+alias 설정하세요
+
+1. a1 = /kgitbank 디렉토리 생성
+alias a1='mkdir /kgitbank'
+
+2. a2 = /kgitbank 디렉토리 내부에 test1 파일과 test2라는 디렉토리 생성
+alias a2='mkdir /kgitbank/test2 && touch /kgitbank/test1'
+
+3. a3 = /kgitbank 디렉토리 강제 삭제
+alias a3='rm -rf /kgitbank'
+
+4. a4 = /kgitbank 디렉토리 생성하면서 내부에 test1 파일과 test2라는 디렉토리 생성
+alias a4='mkdir -p /kgitbank/test2 && touch /kgitbank/test1'	

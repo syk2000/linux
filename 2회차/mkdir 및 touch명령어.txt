@@ -1,0 +1,10 @@
+1. dir1 디렉터리 만들고  그 안에 test1 test2 test3 파일을 생성하시오
+
+
+2. test1파일에 hi  CentOS7 입력
+
+
+3. test2파일에 a b c d 입력
+
+
+4. test1파일과 test2 파일을 합쳐 새로운 test3 파일 생성하시오
