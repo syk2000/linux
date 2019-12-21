@@ -1,0 +1,427 @@
+[root@localhost ~]# [root@localhost ~]# vi /etc/login.defs
+//중요한 데이터보관
+
+[root@localhost ~]# ls -l
+합계 8
+-rw-------. 1 root root 1699 12월 21 15:01 anaconda-ks.cfg
+-rw-r--r--. 1 root root 1747 12월 21 15:02 initial-setup-ks.cfg
+drwxr-xr-x. 2 root root    6 12월 21 15:02 공개
+drwxr-xr-x. 2 root root    6 12월 21 15:02 다운로드
+drwxr-xr-x. 2 root root    6 12월 21 15:02 문서
+drwxr-xr-x. 2 root root    6 12월 21 15:02 바탕화면
+drwxr-xr-x. 2 root root    6 12월 21 15:02 비디오
+drwxr-xr-x. 2 root root    6 12월 21 15:02 사진
+drwxr-xr-x. 2 root root    6 12월 21 15:02 서식
+drwxr-xr-x. 2 root root    6 12월 21 15:02 음악
+[root@localhost ~]# pwd
+/root
+[root@localhost ~]# cd /home
+[root@localhost home]# ls -l
+합계 0
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+============================================
+[root@localhost home]# mkdir dir1
+[root@localhost home]# touch file1
+[root@localhost home]# ls -l
+합계 0
+drwxr-xr-x. 2 root     root      6 12월 21 15:10 dir1
+-rw-r--r--. 1 root     root      0 12월 21 15:11 file1
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+[root@localhost home]# rm -rf dir1 file1
+[root@localhost home]# ls -l
+합계 0
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+[root@localhost home]# cp /etc/log
+login.defs      logrotate.conf  logrotate.d/
+[root@localhost home]# cp /etc/login.defs  /home/login.defs
+
+[root@localhost home]# ls -l
+합계 4
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 21 15:12 login.defs
+[root@localhost home]# mv login.defs hi.dat     //mv login.defs /etc 로 한다면 잘라내기가 된다.
+[root@localhost home]# ll
+합계 4
+-rw-r--r--. 1 root     root     2028 12월 21 15:12 hi.dat
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+
+[root@localhost home]# mkdir /home/dir1	//mkdir dir1으로 상대경로 해도 됨
+[root@localhost home]# ls -l
+합계 4
+drwxr-xr-x. 2 root     root        6 12월 21 15:15 dir1
+-rw-r--r--. 1 root     root     2028 12월 21 15:12 hi.dat
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+
+=================== 파일 복사 붙여넣기=======================
+[root@localhost home]# mv hi.dat /home/dir1
+[root@localhost home]# ls -l
+합계 0
+drwxr-xr-x. 2 root     root     20 12월 21 15:18 dir1
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+[root@localhost home]# cd dir1
+[root@localhost dir1]# ls -l
+합계 4
+-rw-r--r--. 1 root root 2028 12월 21 15:12 hi.dat
+
+===================================텍스트 파일
+[root@localhost dir1]# wc -l test.txt
+10 test.txt
+[root@localhost dir1]# wc -w test.txt
+30 test.txt
+[root@localhost dir1]# wc -c test.txt
+90 test.txt
+[root@localhost dir1]# cat test.txt |grep "one" |wc -1
+wc: 부적절한 옵션 -- '1'
+Try 'wc --help' for more information.
+[root@localhost dir1]# cat test.txt |grep "one" |wc -l
+1
+===================================== sort
+[root@localhost dir1]# cat /etc/passwd  //--중요한 파일  - 지저분한 것들이 많이 나온다.
+
+[root@localhost dir1]# sort -t: -k 3 -n /etc/passwd //특장 규칙 값 호출
+
+
+[root@localhost dir1]# cat test.txt
+9       b       three
+3       a       one
+5       e       two
+7       d       three
+8       c       zero
+4       f       five
+1       j       seven
+0       h       six
+2       i       eight
+6       g       nie
+[root@localhost dir1]# sort test.txt
+0       h       six
+1       j       seven
+2       i       eight
+3       a       one
+4       f       five
+5       e       two
+6       g       nie
+7       d       three
+8       c       zero
+9       b       three
+[root@localhost dir1]# sort -r test.txt
+9       b       three
+8       c       zero
+7       d       three
+6       g       nie
+5       e       two
+4       f       five
+3       a       one
+2       i       eight
+1       j       seven
+0       h       six
+[root@localhost dir1]# sort -k 2 test.txt
+3       a       one
+9       b       three
+8       c       zero
+7       d       three
+5       e       two
+4       f       five
+6       g       nie
+0       h       six
+2       i       eight
+1       j       seven
+[root@localhost dir1]# sort -uk 3 test.txt
+2       i       eight
+4       f       five
+6       g       nie
+3       a       one
+1       j       seven
+0       h       six
+9       b       three
+5       e       two
+8       c       zero
+[root@localhost dir1]# ls -l /var/log | sort -k 5 //사이즈별로 정리
+합계 520
+
+[root@localhost dir1]# uniq -c test.txt
+      1 9       b       three
+      1 3       a       one
+      1 5       e       two
+      1 7       d       three
+      1 8       c       zero
+      1 4       f       five
+      1 1       j       seven
+      1 0       h       six
+      1 2       i       eight
+      1 6       g       nie
+[root@localhost dir1]# uniq -u test.txt //중복되지 않는 것 정리해서 불러주기
+9       b       three
+3       a       one
+5       e       two
+7       d       three
+8       c       zero
+4       f       five
+1       j       seven
+0       h       six
+2       i       eight
+6       g       nie
+[root@localhost dir1]# cat test.txt  | sort  -r | uniq  내림차순
+9       b       three
+8       c       zero
+7       d       three
+6       g       nie
+5       e       two
+4       f       five
+3       a       one
+2       i       eight
+1       j       seven
+0       h       six
+
+특정열을 뽑아낼 때 cut 필요
+cut과 awk명령어는 고급 단계이다.
+
+cut에서 1,6번 뽑을거야 passwd에서 참고해서 뽑을거야
+more - 화면단위로 끊어서  users라는 파일에다가 저장을해
+
+[root@localhost dir1]# cut -d : -f1,6 < /etc/passwd | sort |more > users
+[root@localhost dir1]# ll
+합계 8
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+
+[root@localhost dir1]# cat users //들어갔는지 확인
+
+
+[root@localhost dir1]# cat > test
+abcdefghijklmnop
+1234567890
+[root@localhost dir1]# ll
+합계 12
+-rw-r--r--. 1 root root  28 12월 21 16:29 test
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+[root@localhost dir1]# cut -b5 test
+e
+5
+[root@localhost dir1]# cut -b5,7,9 test
+egi
+579
+[root@localhost dir1]# cut -b5-10 test
+efghij
+567890
+[root@localhost dir1]# cut -b4- test
+defghijklmnop
+4567890
+
+awk명령어 --어려워서 호불호가 많이 갈린다.
+
+[root@localhost dir1]# awk -F ':' '{print $1}' /etc/passwd
+
+kgitbank
+//맨밑에 나온다
+[root@localhost dir1]# awk -F ':' '{print $1}' /etc/passwd |more
+//나눠서 나온다
+리눅스는 대문자 소문자 구별시킨다.
+
+[root@localhost dir1]# find / -name '*.txt'
+[root@localhost dir1]# find /home -name '*.txt'
+[root@localhost dir1]# find / -name 'fi*' -ls
+
+[root@localhost dir1]# find / -name 'etc' -type d > fileout.txt
+
+[root@localhost dir1]#
+
+[root@localhost dir1]# ll
+합계 16
+-rw-r--r--. 1 root root 161 12월 21 16:56 fileout.txt
+-rw-r--r--. 1 root root  28 12월 21 16:29 test
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+[root@localhost dir1]# cat fileout.txt
+/run/initramfs/state/etc
+/etc
+/etc/avahi/etc
+/usr/lib64/festival/etc
+/usr/share/doc/oddjob-0.31.5/sample/etc
+/usr/share/festival/lib/etc
+/usr/etc
+/usr/local/etc
+
+[root@localhost dir1]# ll
+합계 16
+-rw-r--r--. 1 root root 161 12월 21 16:56 fileout.txt
+-rw-r--r--. 1 root root  28 12월 21 16:29 test
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+[root@localhost dir1]# touch a.dat b.dat c.dat
+[root@localhost dir1]# ll
+합계 16
+-rw-r--r--. 1 root root   0 12월 21 17:04 a.dat
+-rw-r--r--. 1 root root   0 12월 21 17:04 b.dat
+-rw-r--r--. 1 root root   0 12월 21 17:04 c.dat
+-rw-r--r--. 1 root root 161 12월 21 16:56 fileout.txt
+-rw-r--r--. 1 root root  28 12월 21 16:29 test
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+[root@localhost dir1]# pwd
+/home/dir1
+
+
+[root@localhost dir1]# find . -name '*.dat' -exec rm {} \;
+[root@localhost dir1]# ll
+합계 16
+-rw-r--r--. 1 root root 161 12월 21 16:56 fileout.txt
+-rw-r--r--. 1 root root  28 12월 21 16:29 test
+-rw-r--r--. 1 root root  90 12월 21 16:02 test.txt
+-rw-r--r--. 1 root root 775 12월 21 16:27 users
+
+
+//이게 정답
+[root@localhost dir1]# find / -type f -user root \{-perm -4000 -o -perm -2000\} -exec ls -l {} \;
+//이건 정답이 아니다.
+[root@localhost dir1]# find / -type f -user root -perm -4000 -o -perm -2000 -exec ls -l {} \;
+//리눅스 1급 같은 자격증이나 보안쪽에서 출제가 된다.
+-o : or
+-a : and
+
+
+[root@localhost dir1]# cat /etc/shadow |more
+== 로그인 할때 패스워드가 들어가 있는 것
+
+
+작업 스케줄 지정 - 주기적으로 반복할 때
+(crontab 설정) -데이터 백업 할때 사용을 한다. 리눅스 시험 칠때 매번 나온다.
+데몬 - 서버 돌아가기위한 설정 파일
+
+
+[root@localhost dir1]# vi /etc/crontab //설명서
+[root@localhost dir1]# crontab -e    //정보입력하고 저장 후 나오기
+no crontab for root - using an empty one
+crontab: installing new crontab
+[root@localhost dir1]# crontab -l   //적은 것 확인하기
+40 4 * * 6 shutdown -r now
+
+분 시 월 요 일
+
+좀비pc확인 crontab을 체크한다.
+
+==================================================
+
+해커 PC
+[root@localhost home]#yum -y install nc
+[root@localhost home]# ifconfig |head -2
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.130  netmask 255.255.255.0  broadcast 192.168.10.255
+[root@localhost home]#
+[root@localhost home]# systemctl stop firewalld
+[root@localhost home]# nc -l 80
+//80번 포트에서 데이터 받아 올때까지 멈춰 있는 상태이다.
+
+밑에 희생자 PC에서 잘 확인 후
+
+[root@localhost home]# cat /etc/shadow |more
+//을 입력하면 데이터 정보값이 넘어 온것을 확인 할 수가있다.
+
+======================================================
+
+리눅스 서버 ==희생자 PC
+[root@localhost /]# netstat -antup |grep :80 //리눅스 서버로 확인을 해준다
+[root@localhost /]# crontab -e
+//시간을 입력해준 다음 IP주소를 같이 입력을 해준다.
+다른 터미널에서 값을 [root@localhost /]# tail -f /var/log/cron을 연 것을 확인후
+저장하고 빠져 나온다.
+
+=======================================================
+
+다른 터미널 열고
+[root@localhost /]# tail -f /var/log/cron을 연다.
+그러면 희생자PC에서 나왔다고 정보가 뜬다.
+
+====================================================
+at 명령어
+
+[root@localhost home]# at 4:00 am tomorrow
+at> yum -y update
+at> reboot
+at> <EOT> 				//ctrl+d를 하면 그 화면에서 나간다.
+job 1 at Sun Dec 22 04:00:00 2019
+You have new mail in /var/spool/mail/root
+//4:00 아침에 리부팅까지 다한다.
+
+[root@localhost home]# at -l
+1       Sun Dec 22 04:00:00 2019 a root
+You have new mail in /var/spool/mail/root
+
+//설정 취소하기
+[root@localhost home]# atrm l
+at: unknown jobid: l
+
+==========================================================
+리눅스 부팅 과정
+
+init
+
+
+[root@localhost home]# systemctl get-default
+graphical.target
+You have new mail in /var/spool/mail/root
+[root@localhost home]# systemctl set-default multi-user.target //run level=3번으로 설정
+Removed symlink /etc/systemd/system/default.target.
+Created symlink from /etc/systemd/system/default.target to /usr/lib/systemd/system/multi-user.ta             rget.
+
+//파일 지우고 다시만들어서 run level 재조정
+[root@localhost home]# systemctl set-default graphical.target
+Removed symlink /etc/systemd/system/default.target.
+Created symlink from /etc/systemd/system/default.target to /usr/lib/systemd/system/graphical.target.
+You have new mail in /var/spool/mail/root
+
+
+
+=====================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
