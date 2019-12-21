@@ -1,0 +1,357 @@
+[root@localhost ~]# pwd
+/root
+[root@localhost ~]# cd..
+bash: cd..: 명령을 찾을 수 없습니다...
+[root@localhost ~]# cd ..
+[root@localhost /]# ls -l
+합계 24
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 bin -> usr/bin
+dr-xr-xr-x.   5 root root 4096 12월 15 15:01 boot
+drwxr-xr-x.  20 root root 3300 12월 15 15:01 dev
+drwxr-xr-x. 139 root root 8192 12월 15 15:01 etc
+drwxr-xr-x.   3 root root   22 12월 15 15:00 home
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 12월 15 14:48 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6  4월 11  2018 media
+drwxr-xr-x.   2 root root    6  4월 11  2018 mnt
+drwxr-xr-x.   3 root root   16 12월 15 14:55 opt
+dr-xr-xr-x. 221 root root    0 12월 15 15:01 proc
+dr-xr-x---.  14 root root 4096 12월 15 15:02 root
+drwxr-xr-x.  42 root root 1340 12월 15 15:04 run
+lrwxrwxrwx.   1 root root    8 12월 15 14:48 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6  4월 11  2018 srv
+dr-xr-xr-x.  13 root root    0 12월 15 15:01 sys
+drwxrwxrwt.  18 root root 4096 12월 15 15:04 tmp
+drwxr-xr-x.  13 root root  155 12월 15 14:48 usr
+drwxr-xr-x.  20 root root  282 12월 15 15:01 var
+[root@localhost /]# ll
+합계 24
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 bin -> usr/bin
+dr-xr-xr-x.   5 root root 4096 12월 15 15:01 boot
+drwxr-xr-x.  20 root root 3300 12월 15 15:01 dev
+drwxr-xr-x. 139 root root 8192 12월 15 15:01 etc
+drwxr-xr-x.   3 root root   22 12월 15 15:00 home
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 12월 15 14:48 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6  4월 11  2018 media
+drwxr-xr-x.   2 root root    6  4월 11  2018 mnt
+drwxr-xr-x.   3 root root   16 12월 15 14:55 opt
+dr-xr-xr-x. 220 root root    0 12월 15 15:01 proc
+dr-xr-x---.  14 root root 4096 12월 15 15:02 root
+drwxr-xr-x.  42 root root 1340 12월 15 15:04 run
+lrwxrwxrwx.   1 root root    8 12월 15 14:48 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6  4월 11  2018 srv
+dr-xr-xr-x.  13 root root    0 12월 15 15:01 sys
+drwxrwxrwt.  18 root root 4096 12월 15 15:04 tmp
+drwxr-xr-x.  13 root root  155 12월 15 14:48 usr
+drwxr-xr-x.  20 root root  282 12월 15 15:01 var
+
+================================
+man-ls - 설명서
+===========================
+[root@localhost /]# ls -il
+합계 24
+  120203 lrwxrwxrwx.   1 root root    7 12월 15 14:48 bin -> usr/bin
+      64 dr-xr-xr-x.   5 root root 4096 12월 15 15:01 boot
+       3 drwxr-xr-x.  20 root root 3300 12월 15 15:01 dev
+16777281 drwxr-xr-x. 139 root root 8192 12월 15 15:01 etc
+33855185 drwxr-xr-x.   3 root root   22 12월 15 15:00 home
+      81 lrwxrwxrwx.   1 root root    7 12월 15 14:48 lib -> usr/lib
+      83 lrwxrwxrwx.   1 root root    9 12월 15 14:48 lib64 -> usr/lib64
+50372639 drwxr-xr-x.   2 root root    6  4월 11  2018 media
+      84 drwxr-xr-x.   2 root root    6  4월 11  2018 mnt
+16860702 drwxr-xr-x.   3 root root   16 12월 15 14:55 opt
+       1 dr-xr-xr-x. 217 root root    0 12월 15 15:01 proc
+33574977 dr-xr-x---.  14 root root 4096 12월 15 15:02 root
+    8871 drwxr-xr-x.  42 root root 1320 12월 15 15:11 run
+  120207 lrwxrwxrwx.   1 root root    8 12월 15 14:48 sbin -> usr/sbin
+33855186 drwxr-xr-x.   2 root root    6  4월 11  2018 srv
+       1 dr-xr-xr-x.  13 root root    0 12월 15 15:01 sys
+16777288 drwxrwxrwt.  18 root root 4096 12월 15 15:04 tmp
+33593033 drwxr-xr-x.  13 root root  155 12월 15 14:48 usr
+50331713 drwxr-xr-x.  20 root root  282 12월 15 15:01 var
+
+==============================================
+[root@localhost /]# date
+2019. 12. 15. (일) 15:11:57 KST
+[root@localhost /]# rdate
+Usage: rdate [-s] [-p] [-u] [-l] [-t sec] <host> ...
+[root@localhost /]# man rdate 			//date와 연관되서 사용하는 설명
+
+================================================
+[root@localhost /]# rdate -s time.bora.net - 시간을 재설정하겠다.
+[root@localhost /]# date
+2019. 12. 15. (일) 15:14:33 KST
+
+===============================================
+
+0 == root
+
+============================================
+[root@localhost /]# which id
+/usr/bin/id
+
+[root@localhost /]# cd ~ //~홈 dir 위치
+[root@localhost ~]# 
+[root@localhost ~]# pwd
+/root
+[root@localhost ~]# cd ~kgitbank/
+[root@localhost kgitbank]# pwd
+/home/kgitbank
+
+===============================
+[root@localhost kgitbank]# mkdir a1 = 디렉토리 만들기
+[root@localhost kgitbank]# touch a2 = 파일 만들기
+[root@localhost kgitbank]# ls
+a1  a2
+[root@localhost kgitbank]# ls -l
+합계 0
+drwxr-xr-x. 2 root root 6 12월 15 15:17 a1
+-rw-r--r--. 1 root root 0 12월 15 15:17 a2
+[root@localhost kgitbank]# touch a2
+[root@localhost kgitbank]# ls -l
+합계 0
+drwxr-xr-x. 2 root root 6 12월 15 15:17 a1
+-rw-r--r--. 1 root root 0 12월 15 15:18 a2 //파일은 시간이 바뀐다.
+
+======================================================
+[root@localhost kgitbank]# ls -l
+합계 0
+drwxr-xr-x. 2 root root 6 12월 15 15:17 a1
+-rw-r--r--. 1 root root 0 12월 15 15:18 a2
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 15 15:17 a1
+-rw-r--r--. 1 root root 0 12월 15 15:18 a2
+[root@localhost kgitbank]# rm -rf a*
+[root@localhost kgitbank]# ll
+합계 0
+
+=============================================
+
+[root@localhost kgitbank]# cd ..
+[root@localhost home]# ls -l
+합계 0
+drwx------. 3 kgitbank kgitbank 78 12월 15 15:20 kgitbank
+[root@localhost home]# cp /etc/login.defs /home/ 	//홈이라는 곳에 복사를 한다.
+[root@localhost home]# ls -l
+합계 4
+drwx------. 3 kgitbank kgitbank   78 12월 15 15:20 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 15 15:21 login.defs
+[root@localhost home]# rm -rf login.defs
+[root@localhost home]# ls
+kgitbank
+[root@localhost home]# ls -ll
+합계 0
+drwx------. 3 kgitbank kgitbank 78 12월 15 15:20 kgitbank
+[root@localhost home]# cp -r /etc/login.defs /home
+[root@localhost home]# mv /home/login.defs /home/it //이름만 바꾸기
+[root@localhost home]# ll
+합계 4
+-rw-r--r--. 1 root     root     2028 12월 15 15:23 it
+drwx------. 3 kgitbank kgitbank   78 12월 15 15:20 kgitbank
+[root@localhost home]# cd kgitbank/
+[root@localhost kgitbank]# ll
+합계 0
+[root@localhost kgitbank]# mv /home/it /home/kgitbank/
+[root@localhost kgitbank]# ll
+합계 4
+-rw-r--r--. 1 root root 2028 12월 15 15:23 it
+[root@localhost kgitbank]# cd ..
+[root@localhost home]# ll
+합계 0
+drwx------. 3 kgitbank kgitbank 88 12월 15 15:26 kgitbank //잘라냄
+
+==============================================
+[root@localhost home]# cd /home/kgitbank/
+[root@localhost kgitbank]# ll
+합계 4
+-rw-r--r--. 1 root root 2028 12월 15 15:23 it
+[root@localhost kgitbank]# who
+root     :0           2019-12-15 15:02 (:0)
+root     pts/0        2019-12-15 15:05 (:0)
+[root@localhost kgitbank]# w
+ 15:27:40 up 26 min,  2 users,  load average: 0.00, 0.06, 0.17
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     :0       :0               15:02   ?xdm?   1:04   0.16s /usr/libexec/gn
+root     pts/0    :0               15:05    4.00s  0.16s  0.02s w
+
+==========================================
+[root@localhost kgitbank]# head it
+#
+# Please note that the parameters in this configuration file control the
+# behavior of the tools from the shadow-utils component. None of these
+# tools uses the PAM mechanism, and the utilities that use PAM (such as the
+# passwd command) should therefore be configured elsewhere. Refer to
+# /etc/pam.d/system-auth for more information.
+#
+
+# *REQUIRED*
+#   Directory where mailboxes reside, _or_ name of file, relative to the
+
+
+[root@localhost kgitbank]# tail it
+# the permission mask will be initialized to 022.
+UMASK           077
+
+# This enables userdel to remove user groups if no members exist.
+#
+USERGROUPS_ENAB yes
+
+# Use SHA512 to encrypt password.
+ENCRYPT_METHOD SHA512 
+
+[root@localhost kgitbank]# tail -2 it
+ENCRYPT_METHOD SHA512 
+
+[root@localhost kgitbank]# more it //화면 단위로 보여준다.
+
+================================================
+[root@localhost /]# cat > a
+hi
+goodbye 
+hahaha[root@localhost /]# ^C //ctrl + c or d 면 나온다.
+
+[root@localhost /]# cat a
+hi
+goodbye
+hahaha
+
+=========================
+[root@localhost /]# cd /home/kgitbank //강제 종료해서 다시 설정함
+[root@localhost kgitbank]# cat a
+cat: a: 그런 파일이나 디렉터리가 없습니다
+[root@localhost kgitbank]# cat >>a
+hi
+[root@localhost kgitbank]# cat a
+hi
+[root@localhost kgitbank]# cat >b
+abag
+1324
+jhjkhjk
+[root@localhost kgitbank]# ll
+합계 12
+-rw-r--r--. 1 root root    3 12월 15 15:35 a
+-rw-r--r--. 1 root root   18 12월 15 15:35 b
+-rw-r--r--. 1 root root 2028 12월 15 15:23 it
+[root@localhost kgitbank]# cat a b >> c
+[root@localhost kgitbank]# ll
+합계 16
+-rw-r--r--. 1 root root    3 12월 15 15:35 a
+-rw-r--r--. 1 root root   18 12월 15 15:35 b
+-rw-r--r--. 1 root root   21 12월 15 15:36 c
+-rw-r--r--. 1 root root 2028 12월 15 15:23 it
+
+=====================================
+-rw-r--r--. 1 root root    3 12월 15 15:35 a
+-rw-r--r--. 1 root root   18 12월 15 15:35 b
+-rw-r--r--. 1 root root   21 12월 15 15:36 c
+-rw-r--r--. 1 root root 2028 12월 15 15:23 it
+[root@localhost kgitbank]# alias c='rm -rf *'
+[root@localhost kgitbank]# c
+[root@localhost kgitbank]# ll
+합계 0
+[root@localhost kgitbank]# unalias c
+[root@localhost kgitbank]# ll
+합계 0
+[root@localhost kgitbank]# alias c='mkdir k1'
+[root@localhost kgitbank]# c
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 15 15:48 k1
+
+
+===============================================
+
+[root@localhost /]# alias a4='mkdir -p /kgitbank/test2 && touch /kgitbank/test1' 
+[root@localhost /]# a4
+[root@localhost /]# ll
+합계 28
+-rw-r--r--.   1 root root   17 12월 15 15:32 a
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 bin -> usr/bin
+dr-xr-xr-x.   5 root root 4096 12월 15 15:01 boot
+drwxr-xr-x.  20 root root 3300 12월 15 15:01 dev
+drwxr-xr-x. 139 root root 8192 12월 15 15:01 etc
+drwxr-xr-x.   2 root root    6 12월 15 16:24 home
+drwxr-xr-x.   3 root root   32 12월 15 16:31 kgitbank
+lrwxrwxrwx.   1 root root    7 12월 15 14:48 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 12월 15 14:48 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6  4월 11  2018 media
+drwxr-xr-x.   2 root root    6  4월 11  2018 mnt
+drwxr-xr-x.   3 root root   16 12월 15 14:55 opt
+dr-xr-xr-x. 217 root root    0 12월 15 15:01 proc
+dr-xr-x---.  14 root root 4096 12월 15 15:31 root
+drwxr-xr-x.  42 root root 1320 12월 15 15:11 run
+lrwxrwxrwx.   1 root root    8 12월 15 14:48 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6  4월 11  2018 srv
+dr-xr-xr-x.  13 root root    0 12월 15 15:01 sys
+drwxrwxrwt.  18 root root 4096 12월 15 16:30 tmp
+drwxr-xr-x.  13 root root  155 12월 15 14:48 usr
+drwxr-xr-x.  20 root root  282 12월 15 15:01 var
+
+======================================
+[root@localhost /]# ls -l / roo && ls -l /home/kgit
+ls: cannot access roo: 그런 파일이나 디렉터리가 없습니다
+
+[root@localhost /]# ls -l / roo && ls -l /home/kgitbank/
+ls: cannot access roo: 그런 파일이나 디렉터리가 없습니다
+
+[root@localhost /]# ls -l / root && ls -l /home/kgit
+//root 값만 나오고 kgit가 잘못 나왔다고 나온다.
+
+[root@localhost /]# ls -l / roo || /home/kgit
+ls: cannot access roo: 그런 파일이나 디렉터리가 없습니다
+
+[root@localhost /]# ls -l / root ||ls -l /home/kgitbank/
+//root만 나온다
+
+==============================
+Putty
+
+ip주소값
+[root@localhost /]# ifconfig | head -2
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.150.128  netmask 255.255.255.0  broadcast 192.168.150.255
+
+---------------------------------------------------------------------------------------
+
+파이프
+
+커널 - 하드웨어를 직접 조정하는 것
+
+cat - 한번 만들어지면 수정할 수가 없다.
+그래서 그것을 보안하기 위해 VI편집기를 사용한다.
+vi편집기 키보드별 알아놓기
+
+방향키 hjkL이다.
+
+VI편집기 복습해놓기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
