@@ -1,0 +1,643 @@
+***사용자 계정***
+[root@localhost ~]# cat /etc/default/useradd
+# useradd defaults file
+GROUP=100			//일반 유저 번호
+HOME=/home			//일반사용자 홈
+INACTIVE=-1			
+EXPIRE=
+SHELL=/bin/bash			//bashShell 사용		
+SKEL=/etc/skel			
+CREATE_MAIL_SPOOL=yes
+
+You have new mail in /var/spool/mail/root
+
+[root@localhost ~]# cat /etc/passwd |grep kgitbank	//1000번으로 실행된 이유
+kgitbank:x:1000:1000:kgitbank:/home/kgitbank:/bin/bash 
+
+You have new mail in /var/spool/mail/root
+------------------------------------------------------------------
+[root@localhost ~]# cat /etc/passwd |grep root //root는 userid와 groupid가 0번이다.
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+
+You have new mail in /var/spool/mail/root
+-------------------------------------------------------------------
+[root@localhost ~]# cat /etc/passwd |more
+
+=========================================
+
+[root@localhost ~]# cd /home
+[root@localhost home]# cp /etc/login.defs /home/test.txt
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 test.txt
+[root@localhost home]# mv test.txt login.defs
+You have new mail in /var/spool/mail/root
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+[root@localhost home]# vi /login.defs 			//33번 줄을 보면 알수가 있다.
+
+
+[root@localhost home]# cat /etc/shells //사용할 수있는 shell의 개수
+/bin/sh
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+/bin/tcsh
+/bin/csh
+
+=================================================
+[root@localhost home]# cat /etc/passwd |grep kgitbank
+kgitbank:x:1000:1000:kgitbank:/home/kgitbank:/bin/bash
+
+[root@localhost home]# cat /etc/passwd 
+
+//두가지를 해도 pw부분에서 x라고 다 형식이 표현되어있다.
+x라 표시한 이유는 window가 보안이 약하다 해서 x로 다시 암호화해서 한 것이다.
+
+======================================================
+[root@localhost home]# cat /etc/shadow |grep kgitbank
+kgitbank:$6$2uDTVj9.3w3O8Foh$DI9caQtM05kv0XyhXNNlMKrivhacJzlu2mzqgTm7j9DEOfAVsgp37Hw2x7FZtrYPsVf4XR6l3EVBplY6eSog10::0:99999:7:::
+//보안기사 실기 해석문제에서 나온다.
+
+
+
+[root@localhost home]# useradd user1
+[root@localhost home]# useradd user2
+[root@localhost home]# cat /etc/passwd |grep user1*
+user1:x:1001:1001::/home/user1:/bin/bash
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/passwd |grep user*
+grep: user2: 디렉터리입니다
+[root@localhost home]# cat /etc/passwd |grep user1
+user1:x:1001:1001::/home/user1:/bin/bash
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+drwx------. 3 user1    user1      78 12월 22 15:56 user1
+drwx------. 3 user2    user2      78 12월 22 15:56 user2
+==========================================
+
+[root@localhost home]# cat /etc/shadow |grep user1
+user1:!!:18252:0:99999:7:::
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/shadow |grep kgitbank
+kgitbank:$6$2uDTVj9.3w3O8Foh$DI9caQtM05kv0XyhXNNlMKrivhacJzlu2mzqgTm7j9DEOfAVsgp37Hw2x7FZtrYPsVf4XR6l3EVBplY6eSog10::0:99999:7:::
+
+
+[root@localhost home]# passwd user1
+user1 사용자의 비밀 번호 변경 중
+새  암호:
+잘못된 암호: 암호가 앞뒤 어느쪽에서 읽어도 같은 문맥임
+새  암호 재입력:
+passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
+
+//암호는 1번으로 설정을 해준 상태이다.
+[root@localhost home]# cat /etc/shadow |grep user1	//그러면 암호에서 !가 없어진 것을 확인을 할 수가 있다.
+user1:$6$VbNdd0JB$.r6IxYrttGIF2CAya4lhf8DFXN6wpXJTJXHqnJa7PEFv3vEIAibPq/6RByzrv./LgBA2wDaWsVfRNPuk/eQN/.:18252:0:99999:7:::
+//이제 사용할 수 있는 계정이다.
+
+[root@localhost home]# passwd user2 //암호를 2번으로 설정을 해줬다.
+user2 사용자의 비밀 번호 변경 중
+새  암호:
+잘못된 암호: 암호가 앞뒤 어느쪽에서 읽어도 같은 문맥임
+새  암호 재입력:
+passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
+
+[root@localhost home]# cat /etc/shadow |grep user2 // user1과 같은 암호임에도 암호가 서로 같게 나오지는 않는다.
+user2:$6$MZxCq.7D$0VK6GiTj1GlX79PHRpSXf/N9eg25rUx.0OCGbzLYpVutyRlqBOcbk55yj83QbUG5ZslWXPtAgRHzQHwpvPs3A.:18252:0:99999:7:::
+
+//이유 : sort값으로 인해 달라지는 것이다.
+
+[root@localhost home]# cat /etc/default/useradd
+# useradd defaults file
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+
+========================================================
+[root@localhost home]# useradd -g 1001 user3
+[root@localhost home]# cat /etc/passwd |grep user3
+user3:x:1003:1001::/home/user3:/bin/bash
+//ex 인사팀 들어 올때 그룹으로 인해서 인사팀으로 된다.
+
+[root@localhost home]# usermod -c hi user3
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/passwd |grep user3
+user3:x:1003:1001:hi:/home/user3:/bin/bash 	//hi라는 것이 들어왔다.
+
+[root@localhost home]# usermod -g 1002 user3
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/passwd |grep user3
+user3:x:1003:1002:hi:/home/user3:/bin/bash
+
+[root@localhost home]# useradd user4
+[root@localhost home]# cat /etc/passwd |grep user4
+user4:x:1004:1004::/home/user4:/bin/bash
+
+root@localhost home]# cat /etc/group |grep user1
+user1:x:1001:
+[root@localhost home]# cat /etc/group |grep user
+users:x:100:
+rpcuser:x:29:
+user1:x:1001:
+user2:x:1002:
+user4:x:1004:
+
+[root@localhost home]# cat /etc/group |grep user3
+//useradd를 사용안해서 1003번에 없는 것이다.
+
+[root@localhost home]# groupadd user3
+[root@localhost home]# cat /etc/group |grep user3
+user3:x:1005:
+
+==================================================
+[root@localhost home]# useradd -D //결론 : 이 아이가 명령어이다.
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+[root@localhost home]# useradd -D -g 22
+[root@localhost home]# useradd -D
+GROUP=22
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+[root@localhost home]# useradd -D -b /root
+[root@localhost home]# useradd -D
+GROUP=22
+HOME=/root
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+[root@localhost home]# useradd -D -f 0
+You have new mail in /var/spool/mail/root
+[root@localhost home]# useradd -D
+GROUP=22
+HOME=/root
+INACTIVE=0
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+[root@localhost home]# useradd -D -s /bin/csh
+[root@localhost home]# useradd -D
+GROUP=22
+HOME=/root
+INACTIVE=0
+EXPIRE=
+SHELL=/bin/csh
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+
+[root@localhost home]# useradd -D -e 9999 //기한 연장
+[root@localhost home]# useradd -D
+GROUP=22
+HOME=/root
+INACTIVE=0
+EXPIRE=9999
+SHELL=/bin/csh
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+
+[root@localhost home]# vi /etc/default/useradd
+# useradd defaults file
+GROUPk=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+//이렇게 고쳐주고 저장한 후 나간다.
+
+
+
+[root@localhost home]# cd /var/spool/mail/
+[root@localhost mail]# ll
+합계 492
+-rw-rw----. 1 defaults mail      0 12월 22 16:37 defaults
+-rw-rw----. 1 kgitbank mail      0 12월 21 15:00 kgitbank
+-rw-------. 1 root     mail 498919 12월 22 16:52 root
+-rw-rw----. 1 rpc      mail      0 12월 21 14:55 rpc
+-rw-rw----. 1 user1    mail      0 12월 22 15:56 user1
+-rw-rw----. 1 user2    mail      0 12월 22 15:56 user2
+-rw-rw----. 1 user3    mail      0 12월 22 16:18 user3
+-rw-rw----. 1 user4    mail      0 12월 22 16:22 user4
+
+=============================================
+[root@localhost mail]# useradd -D
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+====================================================
+[root@localhost /]# cd /etc/skel
+You have new mail in /var/spool/mail/root
+[root@localhost skel]# ll
+합계 0
+[root@localhost skel]# ls -al
+합계 24
+drwxr-xr-x.   3 root root   78 12월 22 15:41 .
+drwxr-xr-x. 140 root root 8192 12월 22 17:01 ..
+-rw-r--r--.   1 root root   18  8월  8 21:06 .bash_logout
+-rw-r--r--.   1 root root  193  8월  8 21:06 .bash_profile
+-rw-r--r--.   1 root root  231  8월  8 21:06 .bashrc
+drwxr-xr-x.   4 root root   39 12월 21 14:54 .mozilla
+
+==================================================
+[root@localhost skel]# ls -al /home/user1
+합계 12
+drwx------. 3 user1 user1  78 12월 22 15:56 .
+drwxr-xr-x. 8 root  root  104 12월 22 16:22 ..
+-rw-r--r--. 1 user1 user1  18  8월  8 21:06 .bash_logout
+-rw-r--r--. 1 user1 user1 193  8월  8 21:06 .bash_profile
+-rw-r--r--. 1 user1 user1 231  8월  8 21:06 .bashrc
+drwxr-xr-x. 4 user1 user1  39 12월 21 14:54 .mozilla
+
+====================================================
+[root@localhost skel]# cd /
+[root@localhost /]# mkdir /newskel
+[root@localhost /]# cd /newskel
+[root@localhost newskel]# touch 1 2
+You have new mail in /var/spool/mail/root
+[root@localhost newskel]# ll
+합계 0
+-rw-r--r--. 1 root root 0 12월 22 17:24 1
+-rw-r--r--. 1 root root 0 12월 22 17:24 2
+[root@localhost newskel]# cd ..
+[root@localhost /]# useradd -m -k /newskel/ user100	//무조건 -m 과 -k는 같이 사용해줘야한다.
+You have new mail in /var/spool/mail/root
+[root@localhost /]# clear
+[root@localhost /]# ls -l /home/user100
+합계 0
+-rw-r--r--. 1 user100 user100 0 12월 22 17:24 1
+-rw-r--r--. 1 user100 user100 0 12월 22 17:24 2
+
+==============================================
+//내가 부분적인 키워드 만 기억이나서 찾으려고 할때 사용하는 것 
+  내 PC의 검색어 이용해서 찾기랑 같음
+
+[root@localhost /]# useradd -u 1100 test1
+You have new mail in /var/spool/mail/root
+[root@localhost /]# cat /etc/passwd |grep test1
+test1:x:1100:1100::/home/test1:/bin/bash
+
+[root@localhost /]# useradd -g kgitbank  test2
+[root@localhost /]# cat /etc/passwd |grep test2
+test2:x:1101:1000::/home/test2:/bin/bash
+
+[root@localhost /]# cat /etc/group |grep test
+test1:x:1100:
+[root@localhost /]# cat /etc/group |grep k
+disk:x:6:
+kmem:x:9:
+lock:x:54:
+systemd-network:x:192:
+polkitd:x:998:
+ssh_keys:x:993:
+rtkit:x:172:
+kvm:x:36:qemu
+kgitbank:x:1000:kgitbank
+
+test1의 그룹을 test3로 바꾸겠다
+[root@localhost /]# useradd -G test1 test3
+You have new mail in /var/spool/mail/root
+[root@localhost /]# cat /etc/group |grep test
+test1:x:1100:test3
+test3:x:1102:
+
+
+[root@localhost /]# useradd -c goodby test7
+You have new mail in /var/spool/mail/root
+[root@localhost /]# cat /etc/group |grep test7
+test7:x:1103:
+[root@localhost /]# cat /etc/passwd |grep test7
+test7:x:1103:1103:goodby:/home/test7:/bin/bash
+
+
+[root@localhost /]# mkdir /export/home
+mkdir: `/export/home' 디렉토리를 만들 수 없습니다: 그런 파일이나 디렉터리가 없습니다
+//안만들어 지는 이유: 옵션을 -p로 줘야한다.
+
+[root@localhost /]# mkdir -p /export/home - 이렇게 사용해야 한다.
+[root@localhost /]# useradd -d /export/home/test10 test10
+[root@localhost /]# cat /etc/passwd |grep test10
+test10:x:1104:1104::/export/home/test10:/bin/bash
+[root@localhost /]# ls -ld /export/home/test10/
+drwx------. 3 test10 test10 78 12월 22 17:40 /export/home/test10/
+
+
+====================userdel=========================
+
+[root@localhost /]# cat /etc/passwd |tail
+user2:x:1002:1002::/home/user2:/bin/bash
+user3:x:1003:1002:hi:/home/user3:/bin/bash
+user4:x:1004:1004::/home/user4:/bin/bash
+defaults:x:1005:1006::/root/defaults:/bin/csh
+user100:x:1006:1007::/home/user100:/bin/bash
+test1:x:1100:1100::/home/test1:/bin/bash
+test2:x:1101:1000::/home/test2:/bin/bash
+test3:x:1102:1102::/home/test3:/bin/bash
+test7:x:1103:1103:goodby:/home/test7:/bin/bash
+test10:x:1104:1104::/export/home/test10:/bin/bash
+[root@localhost /]# userdel user1
+[root@localhost /]# cat /etc/passwd |tail
+user2:x:1002:1002::/home/user2:/bin/bash
+user3:x:1003:1002:hi:/home/user3:/bin/bash
+user4:x:1004:1004::/home/user4:/bin/bash
+defaults:x:1005:1006::/root/defaults:/bin/csh
+user100:x:1006:1007::/home/user100:/bin/bash
+test1:x:1100:1100::/home/test1:/bin/bash
+test2:x:1101:1000::/home/test2:/bin/bash
+test3:x:1102:1102::/home/test3:/bin/bash
+test7:x:1103:1103:goodby:/home/test7:/bin/bash
+test10:x:1104:1104::/export/home/test10:/bin/bash
+
+[root@localhost /]# cat /etc/shadow |tail
+user2:$6$MZxCq.7D$0VK6GiTj1GlX79PHRpSXf/N9eg25rUx.0OCGbzLYpVutyRlqBOcbk55yj83QbUG5ZslWXPtAgRHzQHwpvPs3A.:18252:0:99999:7:::
+user3:!!:18252:0:99999:7:::
+user4:!!:18252:0:99999:7:::
+defaults:!!:18252:0:99999:7:0:9999:
+user100:!!:18252:0:99999:7:::
+test1:!!:18252:0:99999:7:::
+test2:!!:18252:0:99999:7:::
+test3:!!:18252:0:99999:7:::
+test7:!!:18252:0:99999:7:::
+test10:!!:18252:0:99999:7:::
+You have new mail in /var/spool/mail/root
+
+
+
+[root@localhost /]# cat /etc/group |grep user //이쪽에서는 user1이 사라졌다.
+users:x:100:
+rpcuser:x:29:
+user2:x:1002:
+user4:x:1004:
+user3:x:1005:
+user100:x:1007:
+[root@localhost /]# cd /home/(user1)이 남아 있는 것을 확인 할 수가 있다.
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+drwx------. 3 test1    test1      78 12월 22 17:32 test1
+drwx------. 3 test2    kgitbank   78 12월 22 17:33 test2
+drwx------. 3 test3    test3      78 12월 22 17:36 test3
+drwx------. 3 test7    test7      78 12월 22 17:37 test7
+drwx------. 3     1001     1001   78 12월 22 15:56 user1
+drwx------. 2 user100  user100    24 12월 22 17:26 user100
+drwx------. 3 user2    user2      78 12월 22 15:56 user2
+drwx------. 3 user3    user2      78 12월 22 16:18 user3
+drwx------. 3 user4    user4      78 12월 22 16:22 user4
+------------------------------------------------------------
+[root@localhost home]# cd /var/spool/mail/ //메일에 찌꺼기(user1)가 남아 있는 것을 확인 할 수가 있다.
+[root@localhost mail]# ll
+합계 548
+-rw-rw----. 1 defaults mail      0 12월 22 16:37 defaults
+-rw-rw----. 1 kgitbank mail      0 12월 21 15:00 kgitbank
+-rw-------. 1 root     mail 556138 12월 22 17:52 root
+-rw-rw----. 1 rpc      mail      0 12월 21 14:55 rpc
+-rw-rw----. 1 test1    mail      0 12월 22 17:32 test1
+-rw-rw----. 1 test10   mail      0 12월 22 17:40 test10
+-rw-rw----. 1 test2    mail      0 12월 22 17:33 test2
+-rw-rw----. 1 test3    mail      0 12월 22 17:36 test3
+-rw-rw----. 1 test7    mail      0 12월 22 17:37 test7
+-rw-rw----. 1     1001 mail      0 12월 22 15:56 user1
+-rw-rw----. 1 user100  mail      0 12월 22 17:26 user100
+-rw-rw----. 1 user2    mail      0 12월 22 15:56 user2
+-rw-rw----. 1 user3    mail      0 12월 22 16:18 user3
+-rw-rw----. 1 user4    mail      0 12월 22 16:22 user4
+
+===========이번에는 user 4번을 지워 보겠다.
+[root@localhost mail]# userdel -r user4
+[root@localhost mail]# cat /etc/passwd |grep user
+saslauth:x:996:76:Saslauthd user:/run/saslauthd:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+saned:x:990:984:SANE scanner daemon user:/usr/share/sane:/sbin/nologin
+user2:x:1002:1002::/home/user2:/bin/bash
+user3:x:1003:1002:hi:/home/user3:/bin/bash
+user100:x:1006:1007::/home/user100:/bin/bash
+
+
+[root@localhost mail]# cat /etc/shadow |tail
+kgitbank:$6$2uDTVj9.3w3O8Foh$DI9caQtM05kv0XyhXNNlMKrivhacJzlu2mzqgTm7j9DEOfAVsgp37Hw2x7FZtrYPsVf4XR6l3EVBplY6eSog10::0:99999:7:::
+user2:$6$MZxCq.7D$0VK6GiTj1GlX79PHRpSXf/N9eg25rUx.0OCGbzLYpVutyRlqBOcbk55yj83QbUG5ZslWXPtAgRHzQHwpvPs3A.:18252:0:99999:7:::
+user3:!!:18252:0:99999:7:::
+defaults:!!:18252:0:99999:7:0:9999:
+user100:!!:18252:0:99999:7:::
+test1:!!:18252:0:99999:7:::
+test2:!!:18252:0:99999:7:::
+test3:!!:18252:0:99999:7:::
+test7:!!:18252:0:99999:7:::
+test10:!!:18252:0:99999:7:::
+You have new mail in /var/spool/mail/root
+[root@localhost mail]# cd /home
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+drwx------. 3 test1    test1      78 12월 22 17:32 test1
+drwx------. 3 test2    kgitbank   78 12월 22 17:33 test2
+drwx------. 3 test3    test3      78 12월 22 17:36 test3
+drwx------. 3 test7    test7      78 12월 22 17:37 test7
+drwx------. 3     1001     1001   78 12월 22 15:56 user1
+drwx------. 2 user100  user100    24 12월 22 17:26 user100
+drwx------. 3 user2    user2      78 12월 22 15:56 user2
+drwx------. 3 user3    user2      78 12월 22 16:18 user3
+[root@localhost home]# cd /var/spool/mail/
+[root@localhost mail]# ll
+합계 552
+-rw-rw----. 1 defaults mail      0 12월 22 16:37 defaults
+-rw-rw----. 1 kgitbank mail      0 12월 21 15:00 kgitbank
+-rw-------. 1 root     mail 559000 12월 22 17:55 root
+-rw-rw----. 1 rpc      mail      0 12월 21 14:55 rpc
+-rw-rw----. 1 test1    mail      0 12월 22 17:32 test1
+-rw-rw----. 1 test10   mail      0 12월 22 17:40 test10
+-rw-rw----. 1 test2    mail      0 12월 22 17:33 test2
+-rw-rw----. 1 test3    mail      0 12월 22 17:36 test3
+-rw-rw----. 1 test7    mail      0 12월 22 17:37 test7
+-rw-rw----. 1     1001 mail      0 12월 22 15:56 user1
+-rw-rw----. 1 user100  mail      0 12월 22 17:26 user100
+-rw-rw----. 1 user2    mail      0 12월 22 15:56 user2
+-rw-rw----. 1 user3    mail      0 12월 22 16:18 user3
+
+
+----user4는 지워서 다시 만들면 만들어지지만  user1은 존재한다고 나온다.----------
+[root@localhost mail]# useradd user1
+useradd: 경고: 홈디렉터리가 이미 있습니다.
+skel 디렉터리에서 파일을 복사하지 않습니다.
+메일함 파일을 만드는 중: 파일이 있습니다
+
+[root@localhost mail]# useradd user4
+[root@localhost mail]#
+==================================================
+[root@localhost mail]# su user4
+[user4@localhost mail]$ touch 1
+touch: cannot touch `1': 허가 거부
+[user4@localhost mail]$ cd /home/user4
+
+[user4@localhost ~]$ touch 1
+[user4@localhost ~]$ ll
+합계 0
+-rw-rw-r--. 1 user4 user4 0 12월 22 17:58 1
+[user4@localhost ~]$ exit   -관리자로 다시 돌아 왔다
+exit
+You have new mail in /var/spool/mail/root
+[root@localhost mail]# userdel -r user4	//다시 삭제한다.
+
+[root@localhost mail]# cd /home/
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+drwx------. 3 test1    test1      78 12월 22 17:32 test1
+drwx------. 3 test2    kgitbank   78 12월 22 17:33 test2
+drwx------. 3 test3    test3      78 12월 22 17:36 test3
+drwx------. 3 test7    test7      78 12월 22 17:37 test7
+drwx------. 3     1001     1001   78 12월 22 15:56 user1	//uid와 gid가 1001만들었던 사람이라는 흔적이라는 뜻
+drwx------. 2 user100  user100    24 12월 22 17:26 user100
+drwx------. 3 user2    user2      78 12월 22 15:56 user2
+drwx------. 3 user3    user2      78 12월 22 16:18 user3
+
+
+
+[root@localhost home]# rm -rf user1
+You have new mail in /var/spool/mail/root
+[root@localhost home]# rm -rf /var/spool/mail/user1
+[root@localhost home]# useradd user1
+useradd: 'user1' 사용자가 이미 있습니다
+[root@localhost home]# ll
+합계 4
+drwxr-xr-x. 2 root     root       66 12월 21 17:06 dir1
+drwx------. 3 kgitbank kgitbank   78  4월 11  2018 kgitbank
+-rw-r--r--. 1 root     root     2028 12월 22 15:13 login.defs
+drwx------. 3 test1    test1      78 12월 22 17:32 test1
+drwx------. 3 test2    kgitbank   78 12월 22 17:33 test2
+drwx------. 3 test3    test3      78 12월 22 17:36 test3
+drwx------. 3 test7    test7      78 12월 22 17:37 test7
+drwx------. 2 user100  user100    24 12월 22 17:26 user100
+drwx------. 3 user2    user2      78 12월 22 15:56 user2
+drwx------. 3 user3    user2      78 12월 22 16:18 user3
+
+=====================================================
+[root@localhost home]# gpasswd  -h  //help 명령어와 같음
+
+[root@localhost home]# gpasswd -a kgitbank root
+사용자 kgitbank을(를) root 그룹에 등록 중
+[root@localhost home]# cat /etc/group | grep root
+root:x:0:kgitbank
+You have new mail in /var/spool/mail/root
+[root@localhost home]# gpasswd -a user100 root
+사용자 user100을(를) root 그룹에 등록 중
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:kgitbank,user100
+[root@localhost home]# gpasswd -d user100 root
+사용자 user100을(를) 그룹 root에서 제거하는 중
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:kgitbank
+[root@localhost home]# gpasswd -d kgitbank root
+사용자 kgitbank을(를) 그룹 root에서 제거하는 중
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:
+
+===============다 날라 갈 수가 있다.
+[root@localhost home]# gpasswd -M kgitbank,user100 root
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:kgitbank,user100
+You have new mail in /var/spool/mail/root
+
+[root@localhost home]# gpasswd -M test7 root //M은 덮어쓰기 할 수가 있어서 기존 파일이 다 날라 갈 수가 있기 때문에 조심해야한다.
+You have new mail in /var/spool/mail/root
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:test7
+
+[root@localhost home]# gpasswd  -a kgitbank root  //-a와 -d만 사용하는 것을 추천한다.
+사용자 kgitbank을(를) root 그룹에 등록 중
+[root@localhost home]# cat /etc/group |grep root
+root:x:0:test7,kgitbank
+
+=================PERMISSION=========================
+@ = 링크 파일
+[root@localhost /]# cd /etc/
+[root@localhost etc]# ls -F
+
+[root@localhost kgitbank]# chmod 777 test
+[root@localhost kgitbank]# ll
+합계 0
+drwxrwxrwx. 2 root root 6 12월 22 18:57 test
+[root@localhost kgitbank]# chmod 644 test
+[root@localhost kgitbank]# ll
+합계 0
+drw-r--r--. 2 root root 6 12월 22 18:57 test
+
+
+[root@localhost kgitbank]# chmod 500 test
+[root@localhost kgitbank]# ll
+합계 0
+dr-x------. 2 root root 6 12월 22 18:57 test
+
+[root@localhost kgitbank]# chmod u-w test
+You have new mail in /var/spool/mail/root
+
+[root@localhost kgitbank]# ll
+합계 0
+dr-x------. 2 root root 6 12월 22 18:57 test
+
+[root@localhost kgitbank]# chmod 455 test
+[root@localhost kgitbank]# ll
+합계 0
+dr--r-xr-x. 2 root root 6 12월 22 18:57 test
+
+[root@localhost kgitbank]# chown kgitbank test //소유자를 root에서 kgitbank로 바꿈
+You have new mail in /var/spool/mail/root
+[root@localhost kgitbank]# ll
+합계 0
+dr--r-xr-x. 2 kgitbank root 6 12월 22 18:57 test
+
+[root@localhost kgitbank]# chgrp user100 test //그룹 바꾸기
+[root@localhost kgitbank]# ll
+합계 0
+dr--r-xr-x. 2 kgitbank user100 6 12월 22 18:57 test
+
+			     소유자.소유자그룹
+[root@localhost kgitbank]# chown root.kgitbank test
+[root@localhost kgitbank]# ll
+합계 0
+dr--r-xr-x. 2 root kgitbank 6 12월 22 18:57 test
+
+[root@localhost kgitbank]# ls -l /etc/shadow
+----------. 1 root root 1634 12월 22 17:59 /etc/shadow //아무것도 하지마
+하지만 root만 봤다. 그래서 많은 해커들이 root를 탈취하려는 이유중 하나이다.
+
+umask 때문에 파일이나 디렉토리 만들면 666,777이 나와야 하지만 빠지게 되었다.
