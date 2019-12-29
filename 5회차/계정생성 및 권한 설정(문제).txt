@@ -1,0 +1,30 @@
+1.bts, test1 계정을 만든 뒤 다음 환경을 만드세요
+
+2.홈디렉터리 이동 및 지정
+/export/sdb/home/bts(계정)   <==== bts의 홈디렉토리 여기로 이동
+		/test2(계정) <==== test2 계정생성 하면서 홈디렉토리 여기로 지정
+
+		/ftpuser(계정)/pub/1
+			         /2
+			         /3 <== 파일 1 2 3
+				1,2,3 은 계정 생성과 동시에 자동생성되도록(/etc/skel)
+
+
+***추가 설정***
+
+① /export/sdb/home/ftpuser 디렉토리 권한을 아래와 같이 바꿀 것
+	ftpuser계정 (모든권한), bts그룹(다운로드가능),다른사용자(접근만)
+
+② /export/sdb/home/ftpuser/pub <== test1 계정 로그인 시 접속위치= home directory
+
+③ test1 계정이 ftpuser의 그룹 권한을 가질 수 있도록 설정
+
+④ useradd 없이 test3 계정을 만들고 정상적으로 활성화 되도록 하시오.(chown chmod mkdir cp mv vi 작업)
+
+<힌트>
+	/etc/passwd		
+	/etc/group
+	/etc/shadow
+	/home/사용자 이름
+	/var/spool/mail/사용자 이름
+
