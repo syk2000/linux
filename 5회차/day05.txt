@@ -1,0 +1,822 @@
+[root@localhost ~]# umask
+0022
+//맨 앞에 있는 0은 특수한 퍼미션이다. 잘 쓰지 않는다.
+
+root@localhost ~]# cd /home
+[root@localhost home]# mkdir kgitbank
+[root@localhost home]# cd /kgitbank/
+[root@localhost kgitbank]# mkdir dir
+[root@localhost kgitbank]# touch file
+[root@localhost kgitbank]# ll
+합계: 0
+drwxr-xr-x. 2 root root 6 12??28 14:47 dir
+-rw-r--r--. 1 root root 0 12??28 14:47 file
+
+
+[root@localhost kgitbank]# umask 070
+[root@localhost kgitbank]# mkdir newdir
+[root@localhost kgitbank]# touch newfile
+[root@localhost kgitbank]# ll
+합계: 0
+drwxr-xr-x. 2 root root 6 12??28 14:47 dir
+-rw-r--r--. 1 root root 0 12??28 14:47 file
+drwx---rwx. 2 root root 6 12??28 14:48 newdir
+-rw----rw-. 1 root root 0 12??28 14:48 newfile
+
+[root@localhost kgitbank]# umask 022
+[root@localhost kgitbank]# useradd user100
+[root@localhost kgitbank]# passwd user100
+[root@localhost kgitbank]# cat -n /etc/passwd |tail -2
+    43  kgitbank:x:1000:1000:kgitbank:/home/kgitbank:/bin/bash
+    44  user100:x:1001:1001::/home/user100:/bin/bash
+[root@localhost kgitbank]# cat -n /etc/shadow |tail -2
+    43  kgitbank:$6$QkVH5LG6AKivSwpG$KFdyLcdWSQMaAd.wa9vTWtvKaZloqoHE5f.7QiRHcZedNjZZxutnnrnDLJLDVMNU8Uv0IqCAfmpzm3ziy2bU50::0:99999:7:::
+    44  user100:$6$Gh0OkInm$D7ECBNwh8VL8qBwg2rmjApeFOJHUXU8eE0T7Bg0Qgqa2rfTU82pH1bq5Yy39ckdWZQbVisE1Lo0Mwle97R/yP/:18258:0:99999:7:::
+[root@localhost kgitbank]# cat -n /etc/shadow | tail -l
+    35  saned:!!:18245::::::
+    36  gdm:!!:18245::::::
+    37  gnome-initial-setup:!!:18245::::::
+    38  sshd:!!:18245::::::
+    39  avahi:!!:18245::::::
+    40  postfix:!!:18245::::::
+    41  ntp:!!:18245::::::
+    42  tcpdump:!!:18245::::::
+    43  kgitbank:$6$QkVH5LG6AKivSwpG$KFdyLcdWSQMaAd.wa9vTWtvKaZloqoHE5f.7QiRHcZedNjZZxutnnrnDLJLDVMNU8Uv0IqCAfmpzm3ziy2bU50::0:99999:7:::
+    44  user100:$6$Gh0OkInm$D7ECBNwh8VL8qBwg2rmjApeFOJHUXU8eE0T7Bg0Qgqa2rfTU82pH1bq5Yy39ckdWZQbVisE1Lo0Mwle97R/yP/:18258:0:99999:7:::
+[root@localhost kgitbank]# ls -l/etc/shadow
+
+[root@localhost kgitbank]# chmod 4755 newdir
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rw-r--r--. 1 root root 0 12월 28 15:01 file
+drwsr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# chmod u-s newdir
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rw-r--r--. 1 root root 0 12월 28 15:01 file
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# touch file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rw-r--r--. 1 root root 0 12월 28 15:05 file   //빨간색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+[root@localhost kgitbank]# chmod 4755 file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwsr-xr-x. 1 root root 0 12월 28 15:05 file //빨간색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# chmod u-s file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwxr-xr-x. 1 root root 0 12월 28 15:05 file //초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# chmod 2755 dir
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-sr-x. 2 root root 6 12월 28 15:01 dir
+-rwxr-xr-x. 1 root root 0 12월 28 15:05 file //초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+[root@localhost kgitbank]# chmod g-s dir
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwxr-xr-x. 1 root root 0 12월 28 15:05 file //초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# ls -ld /tmp //tmp가 초록색 형광색으로 처져있음
+drwxrwxrwt. 17 root root 4096 12월 28 15:07 
+
+[root@localhost kgitbank]# chmod 1755 dir
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-t. 2 root root 6 12월 28 15:01 dir //파란색 형광색
+-rwxr-xr-x. 1 root root 0 12월 28 15:05 file //초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# chmod o-t dir //sticky 비트 설정
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwxr-xr-x. 1 root root 0 12월 28 15:05 file
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+[root@localhost kgitbank]# chmod 5777 file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwsrwxrwt. 1 root root 0 12월 28 15:05 file //빨간색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+
+[root@localhost kgitbank]# chmod u-s,o-t file //원래 상태로 돌리기
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwxrwxrwx. 1 root root 0 12월 28 15:05 file//초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+
+
+[root@localhost kgitbank]# chmod 6777 file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwsrwsrwx. 1 root root 0 12월 28 15:05 file //빨간색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+[root@localhost kgitbank]# chmod 1755 file
+[root@localhost kgitbank]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 15:01 dir
+-rwxr-xr-t. 1 root root 0 12월 28 15:05 file //초록색
+drwxr-xr-x. 2 root root 6 12월 28 15:01 newdir
+-rw-------. 1 root root 0 12월 28 15:01 newfile
+
+
+
+=========================Sticky bit이용=========================
+[root@localhost kgitbank]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+
+//실행 이전에 Permission 확인
+
+
+[root@localhost kgitbank]# useradd user1
+[root@localhost kgitbank]# useradd user2
+[root@localhost kgitbank]# passwd user1 //마음대로 사용할 수 있도록 설정
+user1 사용자의 비밀 번호 변경 중
+새  암호:
+잘못된 암호: 암호가 앞뒤 어느쪽에서 읽어도 같은 문맥임
+새  암호 재입력:
+passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
+
+[root@localhost kgitbank]# mkdir /work
+[root@localhost kgitbank]# cd /
+[root@localhost /]# ll
+합계 28
+
+[root@localhost /]# su user1 	//switch로 user1로 바꾸기
+[user1@localhost /]$ cd /work/
+[user1@localhost work]$ pwd
+/work
+[user1@localhost work]$ touch 1
+touch: cannot touch `1': 허가 거부
+[user1@localhost work]$ exit
+exit
+
+[root@localhost /]# chmod 1777 /work
+[root@localhost /]# su user1
+[user1@localhost /]$ cd /work/
+[user1@localhost work]$ touch 1
+[user1@localhost work]$ ll
+합계 0
+-rw-rw-r--. 1 user1 user1 0 12월 28 15:59 1
+[user1@localhost work]$ chmod 777 1
+[user1@localhost work]$ ll
+합계 0
+-rwxrwxrwx. 1 user1 user1 0 12월 28 15:59 1
+[user1@localhost work]$ mkdir dir1
+[user1@localhost work]$ chmod 777 dir1
+//누구도 수정 삭제 할 수있도록 만들었다.
+
+[user1@localhost work]$ exit
+exit
+[root@localhost /]# su user2
+[user2@localhost /]$ ll
+합계 28
+[user2@localhost /]$ cd /work/
+[user2@localhost work]$ pwd
+/work
+[user2@localhost work]$ ll
+합계 0
+-rwxrwxrwx. 1 user1 user1 0 12월 28 15:59 1        //초록색 글자
+drwxrwxrwx. 2 user1 user1 6 12월 28 15:59 dir1	    //초록색 형광
+[user2@localhost work]$ touch 2
+[user2@localhost work]$ mkdir dir2
+[user2@localhost work]$ ll
+합계 0
+-rwxrwxrwx. 1 user1 user1 0 12월 28 15:59 1
+-rw-rw-r--. 1 user2 user2 0 12월 28 16:01 2
+drwxrwxrwx. 2 user1 user1 6 12월 28 15:59 dir1
+drwxrwxr-x. 2 user2 user2 6 12월 28 16:01 dir2
+
+[user2@localhost work]$ rm -rf 1		//초록색 글자
+rm: cannot remove `1': 명령을 허용하지 않음
+[user2@localhost work]$ rm -rf dir1		//초록색 형광
+rm: cannot remove `dir1': 명령을 허용하지 않음
+[user2@localhost work]$ rm -rf 2
+[user2@localhost work]$ rm -rf dir2
+[user2@localhost work]$ ll
+합계 0
+-rwxrwxrwx. 1 user1 user1 0 12월 28 15:59 1
+drwxrwxrwx. 2 user1 user1 6 12월 28 15:59 dir1
+
+
+[user2@localhost work]$ vi 1 //KKK라고 입력하고 나온다.
+[user2@localhost work]$ exit
+exit
+[root@localhost /]# rm -rf /work/
+[root@localhost /]# userdel -r user1 //r 옵션을 안주면 완전히 삭제가 되지를 않는다.
+[root@localhost /]# userdel -r user2
+[root@localhost /]# userdel -r user100
+[root@localhost /]# cat -n /etc/passwd | tail -2
+    42  tcpdump:x:72:72::/:/sbin/nologin
+    43  kgitbank:x:1000:1000:kgitbank:/home/kgitbank:/bin/bash
+
+====================set UID=================================
+[root@localhost /]# cd /root/
+[root@localhost ~]# ll
+합계 8
+[root@localhost 바탕화면]# ll
+합계 0
+
+[root@localhost 바탕화면]# mkdir dir1 //vmware에 dir 1 폴더가 생성이 된다.
+[root@localhost 바탕화면]# rm -rf dir1 //삭제가 된다.
+
+c언어를 이용한다.
+
+[root@localhost 바탕화면]# yum -y install gcc //gcc=VI편집기 같은 것
+//자동으로 다운 받고 complete으로 뜬다. 권한 상승시키기 위한 방법중 하나
+
+[root@localhost 바탕화면]# useradd itbank
+[root@localhost 바탕화면]# passwd itbank
+itbank 사용자의 비밀 번호 변경 중
+새  암호:
+잘못된 암호: 암호가 앞뒤 어느쪽에서 읽어도 같은 문맥임
+새  암호 재입력:
+passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
+
+
+[root@localhost 바탕화면]# useradd user1
+[root@localhost 바탕화면]# passwd user1
+user1 사용자의 비밀 번호 변경 중
+새  암호:
+잘못된 암호: 암호가 앞뒤 어느쪽에서 읽어도 같은 문맥임
+새  암호 재입력:
+passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
+
+[root@localhost 바탕화면]# vi suid.c //vi 편집기로 열고 이내용으 입력해 본다.
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<fcntl.h>
+
+#define MAX 1024
+
+
+int main(int argc, char** argv){
+        printf("RUID:%d\t EUID:%d \n",getuid(),geteuid());
+        printf("RGID:%d\t EUID:%d\n",getgid(),getgid());
+
+        int fd, count;
+        char buf[MAX];
+
+        fd=open(argv[1], O_RDONLY);
+
+        if(fd==-1){
+                printf("file open failed \n");
+                exit(1);
+                }
+
+        while(1){
+                count=read(fd,buf,sizeof(buf));
+                        if(count <=0){
+                                break;
+			}
+                                write(1,buf,count);
+                }
+}
+
+저장하고 나가면 텍스트로 생긴다. 들어가면 위의 코드가 나온다.
+컴파일을 해야 실행이 되고 실행파일로 만들어 줘야한다.
+
+[root@localhost 바탕화면]# ll
+[root@localhost 바탕화면]# gcc suid.c -o suid
+//실행하면 오류가 난경우는 다시 vi 편집기에 가서 수정하면되고,
+성공적으로 하면 vmware에서 suid라는 다이아몬드형태가 나온다.
+
+[root@localhost 바탕화면]# vi suid
+//vmware에서 실행시킨후 하면은 이곳으로 들어가면 기계어가 뜬다. 즉 기계어로 번역한 것이다.
+
+
+[root@localhost 바탕화면]# su itbank
+[itbank@localhost 바탕화면]$ pwd
+/root/바탕화면
+[itbank@localhost 바탕화면]$ ls -l
+합계 16
+-rwxr-xr-x. 1 root root 8888 12월 28 16:49 suid
+-rw-r--r--. 1 root root  465 12월 28 16:49 suid.c
+
+[itbank@localhost 바탕화면]$ ./suid /etc/shadow //파일을 실행 할거야
+RUID:1001        EUID:1001
+RGID:1001        EUID:1001
+file open failed				//파일을 못열었다.
+
+[itbank@localhost 바탕화면]$ exit
+exit
+[root@localhost 바탕화면]# chmod u+s suid
+[root@localhost 바탕화면]# ls -l
+합계 16
+-rwsr-xr-x. 1 root root 8888 12월 28 16:49 suid //빨간색 형광색
+-rw-r--r--. 1 root root  465 12월 28 16:49 suid.c
+[root@localhost 바탕화면]# su itbnak
+su: user itbnak does not exist
+[root@localhost 바탕화면]# ./suid /etc/shadow
+
+RUID:0   EUID:0
+RGID:0   EUID:0
+root:$6$x15gy5Od0wjHpM2d$UDemwfwt6CCXgFVmJ1r.EWfbsXoczF2cQ8x/w2Bslb.MZZDC2.W1Uc5U5VTHeY1aB2qgaOBXOCVjwZ2GHhdMN0::0:99999:7:::
+bin:*:17834:0:99999:7:::
+daemon:*:17834:0:99999:7:::
+adm:*:17834:0:99999:7:::
+lp:*:17834:0:99999:7:::
+sync:*:17834:0:99999:7:::
+shutdown:*:17834:0:99999:7:::
+halt:*:17834:0:99999:7:::
+mail:*:17834:0:99999:7:::
+operator:*:17834:0:99999:7:::
+games:*:17834:0:99999:7:::
+ftp:*:17834:0:99999:7:::
+nobody:*:17834:0:99999:7:::
+systemd-network:!!:18245::::::
+dbus:!!:18245::::::
+polkitd:!!:18245::::::
+libstoragemgmt:!!:18245::::::
+colord:!!:18245::::::
+rpc:!!:18245:0:99999:7:::
+saslauth:!!:18245::::::
+abrt:!!:18245::::::
+rtkit:!!:18245::::::
+pulse:!!:18245::::::
+radvd:!!:18245::::::
+unbound:!!:18245::::::
+gluster:!!:18245::::::
+chrony:!!:18245::::::
+rpcuser:!!:18245::::::
+nfsnobody:!!:18245::::::
+qemu:!!:18245::::::
+tss:!!:18245::::::
+usbmuxd:!!:18245::::::
+geoclue:!!:18245::::::
+setroubleshoot:!!:18245::::::
+saned:!!:18245::::::
+gdm:!!:18245::::::
+gnome-initial-setup:!!:18245::::::
+sshd:!!:18245::::::
+avahi:!!:18245::::::
+postfix:!!:18245::::::
+ntp:!!:18245::::::
+tcpdump:!!:18245::::::
+kgitbank:$6$QkVH5LG6AKivSwpG$KFdyLcdWSQMaAd.wa9vTWtvKaZloqoHE5f.7QiRHcZedNjZZxutnnrnDLJLDVMNU8Uv0IqCAfmpzm3ziy2bU50::0:99999:7:::
+itbank:$6$he0j6AfB$kOFu6OyumtVV2Pz9f9dowbx0vot0kpOhDd.xwBysHQM2.C12ZXW0v6TQt9w8YJsXg7VqjigzfSpgaCPMrYrdc1:18258:0:99999:7:::
+user1:$6$HM1ze3YJ$mSkfH6nuE1myjtlN6rVkhu62JqfBTI37UwSNeRnDdb1ENK9OkWo1pm1uBfuYK.qp8DASev4CsSdonvBP7clRL.:18258:0:99999:7:::
+
+============================파일 속성 설정=====================
+
+[root@localhost 바탕화면]# which chattr
+/usr/bin/chattr
+[root@localhost 바탕화면]# which lsattr
+/usr/bin/lsattr
+[root@localhost 바탕화면]# echo #PATH
+
+[root@localhost 바탕화면]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+[root@localhost 바탕화면]# cd /home/kgitbank/
+[root@localhost kgitbank]# rm -rf *
+[root@localhost kgitbank]# ll
+합계 0
+[root@localhost kgitbank]# touch bbb.lst
+[root@localhost kgitbank]# chmod 777 bbb.lst
+[root@localhost kgitbank]# ll
+합계 0
+-rwxrwxrwx. 1 root root 0 12월 28 17:24 bbb.lst
+[root@localhost kgitbank]# lsattr bbb.lst
+---------------- bbb.lst
+[root@localhost kgitbank]# chattr +i bbb.lst
+[root@localhost kgitbank]# lsattr bbb.lst
+----i----------- bbb.lst
+[root@localhost kgitbank]# rm -rf bbb.lst
+rm: cannot remove `bbb.lst': 명령을 허용하지 않음 
+//권한을 다 줬지만 파일에 특정 속성에 걸려 있어서 삭제가 되지가 않는다.
+
+[root@localhost kgitbank]# lsattr bbb.lst
+----i----------- bbb.lst
+
+
+[root@localhost kgitbank]# chattr -i bbb.lst
+[root@localhost kgitbank]# lsattr bbb.lst
+---------------- bbb.lst
+[root@localhost kgitbank]# ll
+합계 0
+-rwxrwxrwx. 1 root root 0 12월 28 17:24 bbb.lst
+
+[root@localhost kgitbank]# touch bbb.lst
+[root@localhost kgitbank]# chmod 777 bbb.lst
+[root@localhost kgitbank]# ls -l bbb.lst
+-rwxrwxrwx. 1 root root 0 12월 28 17:28 bbb.lst
+[root@localhost kgitbank]# chattr +a bbb.lst
+[root@localhost kgitbank]# lsattr bbb.lst
+-----a---------- bbb.lst
+
+[root@localhost kgitbank]# cat >bbb.lst
+-bash: bbb.lst: 명령을 허용하지 않음
+[root@localhost kgitbank]# cat >> bbb.lst
+test
+good
+kgitbank
+[root@localhost kgitbank]# cat bbb.lst
+test
+good
+kgitbank
+[root@localhost kgitbank]# cat >>bbb.lst
+hi
+bye
+[root@localhost kgitbank]# cat bbb.lst
+test
+good
+kgitbank
+hi
+bye
+//append 기능은 된다.
+
+[root@localhost kgitbank]# rm -rf bbb.lst		//삭제가 안된다.
+rm: cannot remove `bbb.lst': 명령을 허용하지 않음
+
+//속성에 들어가서 제거해 준다.
+
+[root@localhost kgitbank]# chattr -a bbb.lst
+[root@localhost kgitbank]# lsattr bbb.lst
+---------------- bbb.lst
+[root@localhost kgitbank]# rm -rf bbb.lst
+[root@localhost kgitbank]# ll
+합계 0
+
+
+========================ACL =접근통제 목록=====================
+				VDI와 관련이 있다.
+[root@localhost kgitbank]# getfacl /var/log
+getfacl: Removing leading '/' from absolute path names
+# file: var/log
+# owner: root
+# group: root
+user::rwx
+group::r-x
+other::r-x
+
+[root@localhost kgitbank]# ls -l /var/log
+합계 1004
+
+[root@localhost kgitbank]# getfacl /var/log/messages
+getfacl: Removing leading '/' from absolute path names
+# file: var/log/messages
+# owner: root
+# group: root
+user::rw-
+group::---
+other::---
+
+[root@localhost kgitbank]# ls -l /var/log/messages
+-rw-------. 1 root root 39170 12월 28 17:43 /var/log/messages
+[root@localhost kgitbank]# su kgitbank
+bash-4.2$ cat /var/log/messages
+cat: /var/log/messages: 허가 거부
+bash-4.2$ ls -l /var/log/messages
+-rw-------. 1 root root 39296 12월 28 17:50 /var/log/messages
+
+bash-4.2$ exit
+exit
+[root@localhost kgitbank]# setfacl -m u:kgitbank:r var/log/messages
+setfacl: var/log/messages: 그런 파일이나 디렉터리가 없습니다
+[root@localhost kgitbank]# setfacl -m u:kgitbank:r /var/log/messages
+[root@localhost kgitbank]# getfacl /var/log/messages
+getfacl: Removing leading '/' from absolute path names
+# file: var/log/messages
+# owner: root
+# group: root
+user::rw-
+user:kgitbank:r--
+group::---
+mask::r--
+other::---
+
+[root@localhost kgitbank]# ls -l /var/log/messages
+-rw-r-----+ 1 root root 39296 12월 28 17:50 /var/log/messages
+[user1@localhost kgitbank]$ cat /var/log/messages
+cat: /var/log/messages: 허가 거부
+
+[root@localhost kgitbank]# setfacl -x u:kgitbank /var/log/messages //삭제
+[root@localhost kgitbank]# touch test1
+[root@localhost kgitbank]# getfacl test1
+# file: test1
+# owner: root
+# group: root
+user::rw-
+group::r--
+other::r--
+[root@localhost kgitbank]# ls -l test1
+-rw-r--r--. 1 root root 0 12월 28 17:59 test1
+[root@localhost kgitbank]# setfacl -m u:kgitbank:rwx test1
+[root@localhost kgitbank]# getfacl test1
+# file: test1
+# owner: root
+# group: root
+user::rw-
+user:kgitbank:rwx 		//
+group::r--
+mask::rwx			//rwx=특정 권한을 주는 것이다.
+other::r--
+[root@localhost kgitbank]# setfacl -m m::r test1 //마스크값을 r(읽기)만 하도록 바꿔라
+[root@localhost kgitbank]# getfacl test1
+# file: test1
+# owner: root
+# group: root
+user::rw-
+user:kgitbank:rwx               #effective:r--
+group::r--
+mask::r--
+other::r--
+
+===========================실습=============================
+[root@localhost home]# useradd bts
+[root@localhost home]# useradd test1
+[root@localhost kgitbank]# mkdir /export/sdb/home
+mkdir: `/export/sdb/home' 디렉토리를 만들 수 없습니다: 그런 파일이나 디렉터리가 없습니다
+[root@localhost kgitbank]# mkdir export
+[root@localhost kgitbank]# cd export
+[root@localhost export]# mkdir sdb
+[root@localhost export]# cd sdb
+[root@localhost sdb]# mkdir home
+[root@localhost sdb]# cd home
+
+//혹은 이거 사용해도 된다.
+[root@localhost home]mkdir -p /export/sdb/home
+[root@localhost home]usermod -d /export/sdb/home/bts -m bts 
+//bts의 홈디렉토리 여기로 이동
+
+//홈디렉토리 여기로 만들자 마자 생성
+[root@localhost home]# useradd -d /expoort/sdb/home/test2 
+
+[root@localhost home]# tail -1 /etc/passwd
+test1:x:1002:1002::/home/test1:/bin/bash
+[root@localhost home]# ls -l /etc/passwd
+[root@localhost home]# cd /etc/skel/
+[root@localhost skel]# ll
+합계 0
+
+[root@localhost skel]# ls -al
+합계 24
+drwxr-xr-x.   3 root root   78  4월 11  2018 .
+drwxr-xr-x. 139 root root 8192 12월 28 18:47 ..
+-rw-r--r--.   1 root root   18 10월 31  2018 .bash_logout
+-rw-r--r--.   1 root root  193 10월 31  2018 .bash_profile
+-rw-r--r--.   1 root root  231 10월 31  2018 .bashrc
+drwxr-xr-x.   4 root root   39 12월 15 14:48 .mozilla
+[root@localhost skel]# mkdir pub
+[root@localhost skel]# ll
+합계 0
+drwxr-xr-x. 2 root root 6 12월 28 18:50 pub
+[root@localhost skel]# cd pub/
+[root@localhost pub]# touch 1 2 3
+[root@localhost pub]# ll
+합계 0
+-rw-r--r--. 1 root root 0 12월 28 18:51 1
+-rw-r--r--. 1 root root 0 12월 28 18:51 2
+-rw-r--r--. 1 root root 0 12월 28 18:51 3
+
+[root@localhost pub]# useradd -d /export/sdb/home/ftpuser ftpuser
+[root@localhost pub]# tail -1 /etc/passwd //만들어졌는지 확인하는 역할
+
+[root@localhost pub]# ls -l /export/sdb/home/ftpuser/
+
+[root@localhost home]# cd /export/sdb/home/
+[root@localhost home]# ll
+합계 0
+drwx------. 3 bts      bts      78 12월 28 18:45 bts
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+drwx------. 3 test1    test1    78 12월 28 18:45 test1
+
+
+[root@localhost home]# chmod 751 ftpuser
+[root@localhost home]# chown :bts ftpuser
+[root@localhost home]# usermod -d /export/sdb/home/ftpuser/pub -m test1
+[root@localhost home]# tail -3/etc/passwd
+
+[root@localhost home]# usermod -d /export/sdb/home/ftpuser/bup test1
+[root@localhost home]# tail -3/etc/passwd
+[root@localhost home]# usermod -d /export/sdb/home/ftpuser/pub -m test1
+
+
+[root@localhost pub]# usermod -G ftpuser test1
+[root@localhost pub]# tail -3/etc/group
+[root@localhost pub]# id test1
+[root@localhost pub]#vi /etc/passwd
+//맨밑에 저장
+test3:x:1005:1005::/home/test3:/bin/bash
+[root@localhost pub]# vi/etc/shadow
+//맨 밑에저장
+test!!:1828:0:99999:7:::
+[root@localhost pub]# vi/etc/group
+//맨밑에 저장
+test3:x:1005:
+
+
+[root@localhost home]# cp -r /etc/skel/ /home/test3 //*****매우 중요*****
+
+[root@localhost home]# ls -al /home/test3
+합계 12
+drwxr-xr-x. 4 root root  89 12월 28 19:07 .
+drwxr-xr-x. 6 root root  59 12월 28 19:07 ..
+-rw-r--r--. 1 root root  18 12월 28 19:07 .bash_logout
+-rw-r--r--. 1 root root 193 12월 28 19:07 .bash_profile
+-rw-r--r--. 1 root root 231 12월 28 19:07 .bashrc
+drwxr-xr-x. 4 root root  39 12월 28 19:07 .mozilla
+drwxr-xr-x. 2 root root  33 12월 28 19:07 pub
+
+[root@localhost home]# cd /home
+[root@localhost home]# ls -l
+합계 0
+drwx------. 3 bts      bts      78 12월 28 18:45 bts
+drwx------. 3 kgitbank kgitbank 78  4월 11  2018 kgitbank
+drwx------. 3 test1    test1    78 12월 28 18:45 test1
+drwxr-xr-x. 4 root     root     89 12월 28 19:07 test3
+[root@localhost home]# cd /var/spool/mail
+[root@localhost mail]# ll
+합계 0
+-rw-rw----. 1 bts      mail 0 12월 28 18:45 bts
+-rw-rw----. 1 kgitbank mail 0 12월 15 15:00 kgitbank
+-rw-rw----. 1 rpc      mail 0 12월 15 14:51 rpc
+-rw-rw----. 1 test1    mail 0 12월 28 18:45 test1
+
+[root@localhost mail]# touch test3
+[root@localhost mail]# ll
+합계 0
+-rw-rw----. 1 bts      mail 0 12월 28 18:45 bts
+-rw-rw----. 1 kgitbank mail 0 12월 15 15:00 kgitbank
+-rw-rw----. 1 rpc      mail 0 12월 15 14:51 rpc
+-rw-rw----. 1 test1    mail 0 12월 28 18:45 test1
+-rw-r--r--. 1 root     root 0 12월 28 19:10 test3
+
+[root@localhost mail]# chmod 660 test3
+[root@localhost mail]# chown :mail test3
+[root@localhost mail]# chown test3:mail test3
+
+[root@localhost mail]# ll
+합계 0
+-rw-rw----. 1 bts      mail 0 12월 28 18:45 bts
+-rw-rw----. 1 kgitbank mail 0 12월 15 15:00 kgitbank
+-rw-rw----. 1 rpc      mail 0 12월 15 14:51 rpc
+-rw-rw----. 1 test1    mail 0 12월 28 18:45 test1
+-rw-rw----. 1 root     mail 0 12월 28 19:10 test3
+
+[root@localhost mail]# passwd test3
+[root@localhost mail]# tail -l /etc/shadow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
