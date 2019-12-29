@@ -1,0 +1,303 @@
+
+[root@localhost ~]# cd /home/kgitbank/
+[root@localhost kgitbank]# ls -al
+합계 12
+drwx------. 3 kgitbank kgitbank  78  4월 11  2018 .
+drwxr-xr-x. 3 root     root      22 12월 15 15:00 ..
+-rw-r--r--. 1 kgitbank kgitbank  18 10월 31  2018 .bash_logout //기본적 세팅을 가지고 옴
+
+-rw-r--r--. 1 kgitbank kgitbank 193 10월 31  2018 .bash_profile 
+//기본적 세팅을 가지고 옴
+
+-rw-r--r--. 1 kgitbank kgitbank 231 10월 31  2018 .bashrc
+drwxr-xr-x. 4 kgitbank kgitbank  39 12월 15 14:48 .mozilla
+
+//이 것을 건들일이 거의 없다(현업에서도)
+[root@localhost kgitbank]# vi /etc/profile //로그인과 관련된 파일
+
+/dev/null = 리눅스 = 쓰레기통
+
+===========================================
+[root@localhost kgitbank]# vi /etc/bashrc
+//이것 또한 수정을 하는 것은 비추(초급단계 한에)
+
+
+[root@localhost kgitbank]# vi .bash_profile
+
+[root@localhost kgitbank]# vi .bashrc
+
+==================하드 디스크==================
+[root@localhost /]# ls -li	//i-node와 연관되어 있다.
+합계 24
+
+
+
+[root@localhost kgitbank]# touch data1
+[root@localhost kgitbank]# ll
+합계 0
+-rw-r--r--. 1 root root 0 12월 29 16:19 data1
+[root@localhost kgitbank]# stat data1 	
+//stat 테이블 = 데이터 타입을 잘 보여주는 사례
+  File: `data1'
+  Size: 0               Blocks: 0          IO Block: 4096   일반 빈 파일
+Device: fd00h/64768d    Inode: 17534951    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2019-12-29 16:19:13.525159157 +0900
+Modify: 2019-12-29 16:19:13.525159157 +0900
+Change: 2019-12-29 16:19:13.525159157 +0900
+ Birth: -
+
+--------------위와 아래의 차이 Access타입이 달라졌다--------------
+
+[root@localhost kgitbank]# cat data1
+[root@localhost kgitbank]# stat data1
+  File: `data1'
+  Size: 0               Blocks: 0          IO Block: 4096   일반 빈 파일
+Device: fd00h/64768d    Inode: 17534951    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2019-12-29 16:21:26.942744201 +0900
+Modify: 2019-12-29 16:19:13.525159157 +0900
+Change: 2019-12-29 16:19:13.525159157 +0900
+
+
+
+[root@localhost kgitbank]# chmod 777 data1 //퍼미션 변경
+[root@localhost kgitbank]# ll
+합계 0
+-rwxrwxrwx. 1 root root 0 12월 29 16:19 data1
+[root@localhost kgitbank]# stat data1
+  File: `data1'
+  Size: 0               Blocks: 0          IO Block: 4096   일반 빈 파일
+Device: fd00h/64768d    Inode: 17534951    Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2019-12-29 16:21:26.942744201 +0900
+Modify: 2019-12-29 16:19:13.525159157 +0900
+Change: 2019-12-29 16:26:31.069357327 +0900
+ Birth: -
+[root@localhost kgitbank]# stat data1
+  File: `data1'
+  Size: 0               Blocks: 0          IO Block: 4096   일반 빈 파일
+Device: fd00h/64768d    Inode: 17534951    Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2019-12-29 16:21:26.942744201 +0900
+Modify: 2019-12-29 16:19:13.525159157 +0900
+Change: 2019-12-29 16:26:31.069357327 +0900
+ Birth: -
+
+
+
+[root@localhost kgitbank]# vi data1
+[root@localhost kgitbank]# stat data1
+  File: `data1'
+  Size: 10              Blocks: 8          IO Block: 4096   일반 파일
+Device: fd00h/64768d    Inode: 17534951    Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2019-12-29 16:27:45.493241515 +0900
+Modify: 2019-12-29 16:28:01.003425780 +0900
+Change: 2019-12-29 16:28:01.017425946 +0900
+ Birth: -
+
+=============================================
+[root@localhost kgitbank]# fdisk -l
+
+Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x000b2f96
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048     2099199     1048576   83  Linux
+/dev/sda2         2099200    41943039    19921920   8e  Linux LVM
+
+Disk /dev/mapper/centos-root: 18.2 GB, 18249416704 bytes, 35643392 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+[root@localhost kgitbank]# fdisk /dev/sda //파티션 설명서
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): m
+Command action
+   a   toggle a bootable flag
+   b   edit bsd disklabel
+   c   toggle the dos compatibility flag
+   d   delete a partition
+   g   create a new empty GPT partition table
+   G   create an IRIX (SGI) partition table
+   l   list known partition types
+   m   print this menu
+   n   add a new partition
+   o   create a new empty DOS partition table
+   p   print the partition table
+   q   quit without saving changes
+   s   create a new empty Sun disklabel
+   t   change a partition's system id
+   u   change display/entry units
+   v   verify the partition table
+   w   write table to disk and exit
+   x   extra functionality (experts only)
+
+Command (m for help): q
+
+=============================================
+[root@localhost ~]# vi /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Sun Dec 15 14:48:07 2019
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=aa4ca0dc-839e-428f-a5fd-0a5fb7f0250a /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+"/etc/fstab" 11L, 465C
+
+
+init으로 해도 종료가 된다.
+=============================================
+VMware 끄고 
+
+[root@localhost ~]# fdisk -l			
+//로 치면 많은 내용 중 하드디스크가 추가된 것을 확인 할 수가 있다
+Units = sectors of 1 * 512 = 512 bytes
+
+[root@localhost ~]# fdisk /dev/sdb //파티션을 설정을 한다.
+
+[root@localhost ~]# mkfs -t ext4 /dev/sdb1 //sdb1 포맷시키기
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+25688 inodes, 102400 blocks
+5120 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=33685504
+13 block groups
+8192 blocks per group, 8192 fragments per group
+1976 inodes per group
+Superblock backups stored on blocks:
+        8193, 24577, 40961, 57345, 73729
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+//이렇게 5번까지 포맷시킨다. 4번은 안된다.
+============================================
+[root@localhost ~]# mkdir /mp1
+[root@localhost ~]# mkdir /mp2
+[root@localhost ~]# mkdir /mp3
+[root@localhost ~]# mkdir /mp5
+
+마운트 포인트 시켜준다.
+
+
+[root@localhost ~]# mount -t ext4 /dev/sdb1 /mp1
+[root@localhost ~]# mount -t ext4 /dev/sdb2 /mp2
+[root@localhost ~]# mount -t ext4 /dev/sdb3 /mp3
+[root@localhost ~]# mount -t ext4 /dev/sdb5 /mp5
+
+
+[root@localhost ~]# df -Th	//마운트 잘 되었는지 확인
+Filesystem              Type      Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root xfs        17G  3.9G   14G  23% /
+devtmpfs                devtmpfs  894M     0  894M   0% /dev
+tmpfs                   tmpfs     910M     0  910M   0% /dev/shm
+tmpfs                   tmpfs     910M   11M  900M   2% /run
+tmpfs                   tmpfs     910M     0  910M   0% /sys/fs/cgroup
+/dev/sda1               xfs      1014M  179M  836M  18% /boot
+tmpfs                   tmpfs     182M  4.0K  182M   1% /run/user/42
+tmpfs                   tmpfs     182M   20K  182M   1% /run/user/0
+/dev/sr0                iso9660   4.3G  4.3G     0 100% /run/media/root/CentOS 7 x86_64
+/dev/sdb1               ext4       93M  1.6M   85M   2% /mp1
+/dev/sdb2               ext4      190M  1.6M  175M   1% /mp2
+/dev/sdb3               ext4       92M  1.6M   262M   2% /mp3
+/dev/sdb5	    ext4	   401M  2.3M   374M   1%/mp5
+
+//이대로 껐다가 키면 다시 입력을 해야한다.
+//그래서 VI편집기를 사용해야 한다.
+
+[root@localhost ~]# vi /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Sun Dec 15 14:48:07 2019
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=aa4ca0dc-839e-428f-a5fd-0a5fb7f0250a /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+/dev/sdb1       /mp1    ext4    defaults        1 2	//이 부분을 입력하면 된다.
+/dev/sdb2       /mp2    ext4    defaults        1 2	//이 부분을 입력하면 된다.
+/dev/sdb3       /mp3    ext4    defaults        1 2	//이 부분을 입력하면 된다.
+/dev/sdb5       /mp5    ext4    defaults        1 2	//이 부분을 입력하면 된다.
+
+
+[root@localhost ~]# mount -a //mount가 잘 되었는지 check
+mount: special device /dev/sdb5 does not exist //실패하면 이렇게 뜬다.
+
+
+
+[root@localhost ~]# umount /dev/sdb1 //마운트를 끊는다. //밑에보면 알수있 듯이 sdb1이 안보인다.
+[root@localhost ~]# df -Th
+Filesystem              Type      Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root xfs        17G  3.9G   14G  23% /
+devtmpfs                devtmpfs  894M     0  894M   0% /dev
+tmpfs                   tmpfs     910M     0  910M   0% /dev/shm
+tmpfs                   tmpfs     910M   11M  900M   2% /run
+tmpfs                   tmpfs     910M     0  910M   0% /sys/fs/cgroup
+/dev/sda1               xfs      1014M  179M  836M  18% /boot
+tmpfs                   tmpfs     182M  4.0K  182M   1% /run/user/42
+tmpfs                   tmpfs     182M   20K  182M   1% /run/user/0
+/dev/sr0                iso9660   4.3G  4.3G     0 100% /run/media/root/CentOS 7 x86_64
+/dev/sdb2               ext4      190M  1.6M  175M   1% /mp2
+/dev/sdb3               ext4       92M  1.6M   84M   2% /mp3
+/dev/sdb5	    ext4	   401M  2.3M   374M   1%/mp5
+
+
+
+
+
+
+
+
+
+
+
+
